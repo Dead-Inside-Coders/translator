@@ -3,7 +3,7 @@ package com.tstu.backend.model.enums;
 import java.util.EnumSet;
 
 public enum tType {
-    BOOL("Logical");
+    BOOL("Boolean");
 
     String name;
 

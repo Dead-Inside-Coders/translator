@@ -23,7 +23,7 @@ pop bx
 pop ax
 and ax,bx
 push ax
-mov ff, ax
+mov c, ax
 mov ax,c
 mov bx,a
 cmp ax,bx
@@ -36,7 +36,7 @@ mov ax,1b
 push ax
 pop bx
 pop ax
-or ax,bx
+and ax,bx
 push ax
 mov c, ax
 jmp cont

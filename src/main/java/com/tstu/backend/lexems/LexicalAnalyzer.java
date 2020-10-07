@@ -53,18 +53,6 @@ public class LexicalAnalyzer implements ILexicalAnalyzer {
                     addKeyword(currentSymbol, Lexems.EQUAL);
                     logger.info(symbols[i] + "(равно)");
                     continue;
-                case '&':
-                    addKeyword(currentSymbol, Lexems.AND);
-                    logger.info(symbols[i] + "(AND)");
-                    continue;
-                case '|':
-                    addKeyword(currentSymbol, Lexems.OR);
-                    logger.info(symbols[i] + "(OR)");
-                    continue;
-                case '^':
-                    addKeyword(currentSymbol, Lexems.XOR);
-                    logger.info(symbols[i] + "(XOR)");
-                    continue;
                 case ',':
                     addKeyword(currentSymbol, Lexems.SEMI);
                     logger.info(symbols[i] + "(запятая)");
@@ -124,22 +112,43 @@ public class LexicalAnalyzer implements ILexicalAnalyzer {
                 }
                 continue;
             }
-            // !, !=
+            // !=
             if (symbols[i] == '!') {
-                if (i == symbols.length - 1) {
-                    addKeyword(currentSymbol, Lexems.NOT);
-                    logger.info(symbols[i] + "(NOT)");
-                    continue;
-                }
                 if (symbols[i + 1] == '=') {
                     String twoSymbolsWord = symbols[i] + String.valueOf(symbols[i + 1]);
                     addKeyword(twoSymbolsWord, Lexems.NOT_EQUAL);
                     logger.info(twoSymbolsWord + "(не равно)");
                     i++;
-                } else {
-                    addKeyword(currentSymbol, Lexems.NOT);
-                    logger.info(symbols[i] + "(NOT)");
                 }
+                continue;
+            }
+            // .NOT. , .OR. , .AND. , .XOR.
+            if (symbols[i] == '.') {
+                StringBuilder operations = new StringBuilder();
+                i++;
+                while (symbols[i] != '.') {
+                    operations.append(symbols[i]);
+                    i++;
+                }
+                switch (operations.toString()) {
+                    case "NOT":
+                        addKeyword(operations.toString(), Lexems.NOT);
+                        logger.info(operations.toString() + "(NOT)");
+                        break;
+                    case "AND":
+                        addKeyword(operations.toString(), Lexems.AND);
+                        logger.info(operations.toString() + "(AND)");
+                        break;
+                    case "OR":
+                        addKeyword(operations.toString(), Lexems.OR);
+                        logger.info(operations.toString() + "(OR)");
+                        break;
+                    case "XOR":
+                        addKeyword(operations.toString(), Lexems.XOR);
+                        logger.info(operations.toString() + "(XOR)");
+                        break;
+                }
+                i++;
                 continue;
             }
             if (Character.isDigit(symbols[i])) {
