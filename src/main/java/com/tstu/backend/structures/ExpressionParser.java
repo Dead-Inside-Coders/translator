@@ -162,7 +162,6 @@ public class ExpressionParser {
                     argumentStack.push("expr");
                     break;
                 case OR:
-                case XOR:
                     arg1 = argumentStack.pop();
                     arg2 = argumentStack.pop();
                     CodeGenerator.addInstruction("pop bx");
@@ -170,6 +169,16 @@ public class ExpressionParser {
                     CodeGenerator.addInstruction("or ax,bx");
                     CodeGenerator.addInstruction("push ax");
                     logger.info(arg1 + " | " + arg2);
+                    argumentStack.push("expr");
+                    break;
+                case XOR:
+                    arg1 = argumentStack.pop();
+                    arg2 = argumentStack.pop();
+                    CodeGenerator.addInstruction("pop bx");
+                    CodeGenerator.addInstruction("pop ax");
+                    CodeGenerator.addInstruction("xor ax,bx");
+                    CodeGenerator.addInstruction("push ax");
+                    logger.info(arg1 + " ^ " + arg2);
                     argumentStack.push("expr");
                     break;
                 case AND:
