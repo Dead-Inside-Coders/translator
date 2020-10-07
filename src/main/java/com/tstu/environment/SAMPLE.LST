@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 3.1	    10/07/20 17:55:30	    Page 1
+Turbo Assembler	 Version 3.1	    10/07/20 18:09:44	    Page 1
 sample.asm
 
 
@@ -42,7 +42,7 @@ sample.asm
      36	0036  50		     push ax
      37	0037  5B		     pop bx
      38	0038  58		     pop ax
-     39	0039  23 C3		     and ax,bx
+     39	0039  33 C3		     xor ax,bx
      40	003B  50		     push ax
      41	003C  A3 0004r		     mov c, ax
      42	003F  EB 01 90		     jmp cont
@@ -60,7 +60,7 @@ sample.asm
      54	0055			     PRINT_LOOP:
      55	0055  BA 0000		     MOV DX, 0
      56	0058  F7 F1		     DIV CX
-Turbo Assembler	 Version 3.1	    10/07/20 17:55:30	    Page 2
+Turbo Assembler	 Version 3.1	    10/07/20 18:09:44	    Page 2
 sample.asm
 
 
@@ -78,7 +78,7 @@ sample.asm
      67	0070			     PRINT ENDP
      68	0070			     code ends
      69				     end main
-Turbo Assembler	 Version 3.1	    10/07/20 17:55:30	    Page 3
+Turbo Assembler	 Version 3.1	    10/07/20 18:09:44	    Page 3
 Symbol Table
 
 
@@ -88,7 +88,7 @@ Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "10/07/20"
 ??FILENAME			  Text	 "sample  "
-??TIME				  Text	 "17:55:30"
+??TIME				  Text	 "18:09:44"
 ??VERSION			  Number 030A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
@@ -110,7 +110,7 @@ Groups & Segments		  Bit Size Align  Combine Class
 CODE				  16  0070 Para	  Public  CODE
 DATA				  16  0027 Para	  Public  DATA
 STK				  16  0100 Para	  Stack
-Turbo Assembler	 Version 3.1	    10/07/20 17:55:30	    Page 4
+Turbo Assembler	 Version 3.1	    10/07/20 18:09:44	    Page 4
 Error Summary
 
 

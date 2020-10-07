@@ -1,4 +1,4 @@
-Var a,b,c :Logical
+Var a,b,c :Boolean
 Begin
 a:=0
 b:=1
