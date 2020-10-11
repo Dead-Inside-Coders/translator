@@ -9,9 +9,6 @@ public class Operation {
         this.priority = priority;
     }
 
-    public Operation() {
-    }
-
     public Keyword getSign() {
         return sign;
     }

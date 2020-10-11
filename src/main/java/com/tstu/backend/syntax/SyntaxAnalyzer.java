@@ -63,11 +63,12 @@ public class SyntaxAnalyzer implements ISyntaxAnalyzer {
             throw new SyntaxAnalyzeException("Пропущен символ \":\" ");
         }
 
-        List<Keyword> varEnumeration = varDeclareCodeLine.stream().limit(colonIndex).collect(Collectors.toList());
-        List<Keyword> typeDeclaration = varDeclareCodeLine.stream().skip(colonIndex).collect(Collectors.toList());
+        List<Keyword> typeDeclaration = varDeclareCodeLine.stream().limit(colonIndex).collect(Collectors.toList());
+        List<Keyword> varEnumeration = varDeclareCodeLine.stream().skip(colonIndex).collect(Collectors.toList());
 
-        parseVarEnumeration(varEnumeration);
         parseTypeDeclaration(typeDeclaration);
+        parseVarEnumeration(varEnumeration);
+
     }
 
     private List<List<Keyword>> singleOutPartOfCode(Command start, Command end) throws SyntaxAnalyzeException {
@@ -147,12 +148,8 @@ public class SyntaxAnalyzer implements ISyntaxAnalyzer {
     }
 
     private void parseVarEnumeration(List<Keyword> varEnumeration) throws SyntaxAnalyzeException, LexicalAnalyzeException {
-        if (!nameTable.getIdentifier(varEnumeration.get(0).word).getName().equals(Command.VAR.getName())) {
-            throw new SyntaxAnalyzeException("Ключевое слово Var не найдено");
-        }
-
         Lexems expected = Lexems.NAME;
-        for (int i = 1; i < varEnumeration.size(); i++) {
+        for (int i = 1; i < varEnumeration.size() - 1; i++) { // -1 тк последний символ \n
             if (varEnumeration.get(i).lex != expected) {
                 throw new SyntaxAnalyzeException("Лексема не соответствует ожидаемой");
             }
@@ -174,7 +171,7 @@ public class SyntaxAnalyzer implements ISyntaxAnalyzer {
     }
 
     private void parseTypeDeclaration(List<Keyword> typeDeclaration) throws SyntaxAnalyzeException, LexicalAnalyzeException {
-        Identifier dataTypeIdentifier = nameTable.getIdentifier(typeDeclaration.get(1).word);
+        Identifier dataTypeIdentifier = nameTable.getIdentifier(typeDeclaration.get(0).word);
         if (!dataTypeIdentifier.getCategory().equals(tCat.TYPE)) {
             throw new SyntaxAnalyzeException("Тип данных не найден");
         }

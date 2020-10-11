@@ -36,7 +36,7 @@ mov ax,1b
 push ax
 pop bx
 pop ax
-xor ax,bx
+or ax,bx
 push ax
 mov c, ax
 jmp cont
