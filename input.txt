@@ -1,13 +1,13 @@
-Var a,b,c,d :Logical
+Var a,b,c,d :Boolean
 Begin
 a:=0
 b:=1
 d:=b
-c:= a & d
+c:= a .AND. d
 If c = a Then
-c:= a | d
+c:= a .OR. d
 Else
-c:= a & d
+c:= a .AND. d
 Endif
 Print c
 End

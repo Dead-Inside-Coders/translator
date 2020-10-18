@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 3.1	    10/18/20 15:22:45	    Page 1
+Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 1
 sample.asm
 
 
@@ -60,7 +60,7 @@ sample.asm
      53	0053  50		     push ax
      54	0054  A3 0004r		     mov c, ax
      55	0057  EB 01 90		     jmp cont
-Turbo Assembler	 Version 3.1	    10/18/20 15:22:45	    Page 2
+Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 2
 sample.asm
 
 
@@ -92,7 +92,7 @@ sample.asm
      80	0088			     PRINT ENDP
      81	0088			     code ends
      82				     end main
-Turbo Assembler	 Version 3.1	    10/18/20 15:22:45	    Page 3
+Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 3
 Symbol Table
 
 
@@ -102,7 +102,7 @@ Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "10/18/20"
 ??FILENAME			  Text	 "sample  "
-??TIME				  Text	 "15:22:45"
+??TIME				  Text	 "15:29:01"
 ??VERSION			  Number 030A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
@@ -126,7 +126,7 @@ Groups & Segments		  Bit Size Align  Combine Class
 CODE				  16  0088 Para	  Public  CODE
 DATA				  16  0029 Para	  Public  DATA
 STK				  16  0100 Para	  Stack
-Turbo Assembler	 Version 3.1	    10/18/20 15:22:45	    Page 4
+Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 4
 Error Summary
 
 
