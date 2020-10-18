@@ -2,6 +2,7 @@ data segment para public "data"
 a dw 0b
 b dw 0b
 c dw 0b
+d dw 0b
 PRINT_BUF DB ' ' DUP(10)
 BUFEND DB '$'
 data ends
@@ -15,6 +16,7 @@ mov ax,data
 mov ds,ax
 mov a,0b
 mov b,1b
+mov d,1b
 mov ax,0b
 push ax
 mov ax,1b
@@ -27,8 +29,8 @@ mov c, ax
 mov ax,c
 mov bx,a
 cmp ax,bx
-je if
-jmp cont
+jne if
+je else
 if: 
 mov ax,0b
 push ax
@@ -36,7 +38,18 @@ mov ax,1b
 push ax
 pop bx
 pop ax
-xor ax,bx
+or ax,bx
+push ax
+mov c, ax
+jmp cont
+else: 
+mov ax,0b
+push ax
+mov ax,1b
+push ax
+pop bx
+pop ax
+and ax,bx
 push ax
 mov c, ax
 jmp cont

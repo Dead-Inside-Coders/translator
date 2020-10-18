@@ -15,11 +15,17 @@ public class ArgumentList {
     private static List<Argument<String>> arguments;
 
     public static String getVariableValue(String word) throws ExpressionAnalyzeException {
-        return arguments.stream()
+        String value = arguments.stream()
                 .filter(v -> v.getVariable().getName().equals(word))
                 .findFirst()
                 .orElseThrow(() -> new ExpressionAnalyzeException("Переменная не объявлена"))
                 .getValue();
+
+        if (value.equals("0b") || value.equals("1b")) {
+            return value;
+        } else {
+            return getVariableValue(value);
+        }
     }
 
     public static void clear() {

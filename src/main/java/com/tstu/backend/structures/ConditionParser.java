@@ -31,38 +31,49 @@ public class ConditionParser implements IConditionParser {
 
         ExpressionParser expressionParser;
 
-        switch (conditionArea.size()) {
-            case 3:
-            case 2:
-                parseIfThen(conditionArea.get(0));
-                CodeGenerator.addInstruction("if: ");
-                expressionParser = new ExpressionParser(conditionArea.get(1), declaratedVariable, nameTable);
-                expressionParser.parseExpression();
-                CodeGenerator.addInstruction("jmp cont");
-                CodeGenerator.addInstruction("cont:");
-                break;
-            case 5:
-                parseIfThen(conditionArea.get(0));
-                if (!conditionArea.get(2).get(0).word.equals(Command.ELSEIF.getName())) {
-                    throw new ConditionAnalyzeException("Ожидается команда ELSEIF");
-                }
-                parseIfThen(conditionArea.get(2));
-                break;
-            default:
-                parseIfThen(conditionArea.get(0));
-                if (!conditionArea.get(2).get(0).word.equals(Command.ELSEIF.getName())) {
-                    throw new ConditionAnalyzeException("Ожидается команда ELSEIF");
-                }
-                parseIfThen(conditionArea.get(2));
-                if (!conditionArea.get(4).get(0).word.equals(Command.ELSE.getName())) {
-                    throw new ConditionAnalyzeException("Ожидается команда ELSE");
-                }
-                break;
+        parseIfThen(conditionArea.get(0));
+        CodeGenerator.addInstruction("if: ");
+
+        List<Keyword> expression = conditionArea.get(1);
+        if (!isExpression(expression)) {
+            throw new ConditionAnalyzeException("Ожидается выражение");
         }
+        expressionParser = new ExpressionParser(expression, declaratedVariable, nameTable);
+        expressionParser.parseExpression();
+        CodeGenerator.addInstruction("jmp cont");
+
+        if (isElse()) {
+            if (!conditionArea.get(2).get(0).word.equals(Command.ELSE.getName())) {
+                throw new ConditionAnalyzeException("Ожидается команда ELSE");
+            }
+
+            CodeGenerator.addInstruction("else: ");
+
+            expression = conditionArea.get(3);
+
+            if (!isExpression(expression)) {
+                throw new ConditionAnalyzeException("Ожидается выражение");
+            }
+
+            expressionParser = new ExpressionParser(expression, declaratedVariable, nameTable);
+            expressionParser.parseExpression();
+
+            CodeGenerator.addInstruction("jmp cont");
+        }
+
+        CodeGenerator.addInstruction("cont:");
 
         return true;
 
+    }
 
+
+    private boolean isExpression(List<Keyword> codeLine) throws LexicalAnalyzeException {
+        return nameTable.getIdentifier(codeLine.get(0).word).getCategory().equals(tCat.VAR);
+    }
+
+    private boolean isElse() {
+        return conditionArea.stream().anyMatch(list -> list.get(0).word.equals(Command.ELSE.getName()));
     }
 
     private void parseIfThen(List<Keyword> ifThenCodeLine) throws ConditionAnalyzeException, LexicalAnalyzeException {
@@ -103,7 +114,16 @@ public class ConditionParser implements IConditionParser {
         CodeGenerator.addInstruction("cmp ax,bx");
         value.append(ifThenCodeLine.get(2).lex.equals(Lexems.EQUAL) ? "je" : "jne");
         CodeGenerator.addInstruction(value + " if");
-        CodeGenerator.addInstruction("jmp cont");
+
+        if (isElse()) {
+            if (value.toString().equals("je")) {
+                CodeGenerator.addInstruction("jne else");
+            } else {
+                CodeGenerator.addInstruction("je else");
+            }
+        } else {
+            CodeGenerator.addInstruction("jmp cont");
+        }
 
     }
 }

@@ -36,30 +36,31 @@ public class ExpressionParser {
 
     private void parseDeclaration() throws ExpressionAnalyzeException, LexicalAnalyzeException {
 
-        Identifier variable = nameTable.getIdentifier(expression.get(0).word);
+        Identifier receiveVariable = nameTable.getIdentifier(expression.get(0).word);
 
-        if (variable.getCategory() != tCat.VAR) {
+        if (receiveVariable.getCategory() != tCat.VAR) {
             throw new ExpressionAnalyzeException("Ожидается переменная");
         }
-        if (declaratedVariable.stream().noneMatch(v -> v.equals(variable))) {
+        if (declaratedVariable.stream().noneMatch(v -> v.equals(receiveVariable))) {
             throw new ExpressionAnalyzeException("Переменная не объявлена");
         }
         if (expression.get(1).lex != Lexems.ASSIGN) {
             throw new ExpressionAnalyzeException("Ожидается присваивание");
         }
-        Keyword value = expression.get(2);
-        switch (value.lex) {
+        Keyword sourceVariable = expression.get(2);
+        switch (sourceVariable.lex) {
             case TRUE:
             case FALSE:
-                ArgumentList.addArgument(new Argument<>(nameTable.getIdentifier(expression.get(0).word), String.valueOf(value.lex.getValue())));
-                logger.info("Присваивание - " + expression.get(0).word + " = " + value.lex.getValue());
-                CodeGenerator.addInstruction("mov " + expression.get(0).word + "," + value.word + "b");
+                ArgumentList.addArgument(new Argument<>(nameTable.getIdentifier(expression.get(0).word), sourceVariable.lex.getValue() + "b"));
+                logger.info("Присваивание - " + expression.get(0).word + " = " + sourceVariable.lex.getValue());
+                CodeGenerator.addInstruction("mov " + expression.get(0).word + "," + sourceVariable.word + "b");
                 break;
             case NAME:
-                if (nameTable.getIdentifier(value.word).getCategory() != tCat.VAR) {
-                    CodeGenerator.addInstruction("mov " + expression.get(0).word + "," + value.word);
+                if (nameTable.getIdentifier(sourceVariable.word).getCategory() == tCat.VAR) {
+                    ArgumentList.addArgument(new Argument<>(nameTable.getIdentifier(expression.get(0).word), sourceVariable.word));
+                    logger.info("Присваивание - " + expression.get(0).word + " = " + sourceVariable.word);
+                    CodeGenerator.addInstruction("mov " + expression.get(0).word + "," + ArgumentList.getVariableValue(sourceVariable.word));
                 }
-                CodeGenerator.addInstruction("mov " + expression.get(0).word + ", " + ArgumentList.getVariableValue(value.word) + "b");
                 break;
             default:
                 throw new ExpressionAnalyzeException("Ожидается значение переменной");
@@ -120,20 +121,20 @@ public class ExpressionParser {
                     }
                     argumentStack.push(ArgumentList.getVariableValue(expression.get(i).word));
                     if (willBeInverted) {
-                        CodeGenerator.addInstruction("mov ax," + invert(argumentStack.peek()) + "b");
+                        CodeGenerator.addInstruction("mov ax," + invert(argumentStack.peek()));
                         willBeInverted = false;
                     } else {
-                        CodeGenerator.addInstruction("mov ax," + argumentStack.peek() + "b");
+                        CodeGenerator.addInstruction("mov ax," + argumentStack.peek());
                     }
 
                     CodeGenerator.addInstruction("push ax");
                     needValue = false;
                     break;
-                case LEFT_BRACKET:
-                    // depth = 10;
-                case RIGHT_BRACKET:
-                    // depth = 0;
-                    break;
+//                case LEFT_BRACKET:
+//                    // depth = 10;
+//                case RIGHT_BRACKET:
+//                    // depth = 0;
+//                    break;
             }
         }
 

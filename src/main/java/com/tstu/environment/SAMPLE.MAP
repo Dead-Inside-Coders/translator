@@ -1,9 +1,9 @@
 
  Start  Stop   Length Name               Class
 
- 00000H 00026H 00027H DATA               DATA
+ 00000H 00028H 00029H DATA               DATA
  00030H 0012FH 00100H STK                
- 00130H 0019FH 00070H CODE               CODE
+ 00130H 001B7H 00088H CODE               CODE
 
   Address         Publics by Name
 
