@@ -15,8 +15,47 @@ assume cs:code,ds:data,ss:stk
 mov ax,data
 mov ds,ax
 mov a,0b
+mov b,1b
+mov d,1b
+mov ax,0b
 push ax
-mov ax, a
+mov ax,1b
+push ax
+pop bx
+pop ax
+and ax,bx
+push ax
+mov c, ax
+mov ax,c
+mov bx,a
+cmp ax,bx
+je if
+jne else
+if: 
+mov ax,0b
+push ax
+mov ax,1b
+push ax
+pop bx
+pop ax
+or ax,bx
+push ax
+mov c, ax
+jmp cont
+else: 
+mov ax,0b
+push ax
+mov ax,1b
+push ax
+pop bx
+pop ax
+and ax,bx
+push ax
+mov c, ax
+jmp cont
+cont:
+push ax
+mov ax, c
 CALL PRINT
 pop ax
 mov ax,4c00h

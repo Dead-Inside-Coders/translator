@@ -1,7 +1,7 @@
-Var a,b,c,d :Logical
+Var a,b,c,d :Boolean
 Begin
 a:=0
 b:=1
-c:= a | a & b | b ^ !b
+c:= a .OR. a .AND. b .OR. b .XOR. .NOT. b
 Print c
 End

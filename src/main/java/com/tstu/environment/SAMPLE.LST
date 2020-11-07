@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 1
+Turbo Assembler	 Version 3.1	    11/07/20 21:08:38	    Page 1
 sample.asm
 
 
@@ -34,8 +34,8 @@ sample.asm
      29	0027  A1 0004r		     mov ax,c
      30	002A  8B 1E 0000r	     mov bx,a
      31	002E  3B C3		     cmp ax,bx
-     32	0030  75 02		     jne if
-     33	0032  74 13		     je	else
+     32	0030  74 02		     je	if
+     33	0032  75 13		     jne else
      34	0034			     if:
 *Warning* sample.asm(34) Reserved word used as symbol: IF
      35	0034  B8 0000		     mov ax,0b
@@ -60,7 +60,7 @@ sample.asm
      53	0053  50		     push ax
      54	0054  A3 0004r		     mov c, ax
      55	0057  EB 01 90		     jmp cont
-Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 2
+Turbo Assembler	 Version 3.1	    11/07/20 21:08:38	    Page 2
 sample.asm
 
 
@@ -92,7 +92,7 @@ sample.asm
      80	0088			     PRINT ENDP
      81	0088			     code ends
      82				     end main
-Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 3
+Turbo Assembler	 Version 3.1	    11/07/20 21:08:38	    Page 3
 Symbol Table
 
 
@@ -100,9 +100,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "10/18/20"
+??DATE				  Text	 "11/07/20"
 ??FILENAME			  Text	 "sample  "
-??TIME				  Text	 "15:29:01"
+??TIME				  Text	 "21:08:38"
 ??VERSION			  Number 030A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
@@ -126,7 +126,7 @@ Groups & Segments		  Bit Size Align  Combine Class
 CODE				  16  0088 Para	  Public  CODE
 DATA				  16  0029 Para	  Public  DATA
 STK				  16  0100 Para	  Stack
-Turbo Assembler	 Version 3.1	    10/18/20 15:29:01	    Page 4
+Turbo Assembler	 Version 3.1	    11/07/20 21:08:38	    Page 4
 Error Summary
 
 
