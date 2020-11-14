@@ -36,9 +36,9 @@ target/
 *.war
 *.nar
 *.ear
-*.zip
+
 *.tar.gz
-*.rar
+*.zip
 
 # virtual machine crash logging.txt, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
