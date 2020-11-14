@@ -2,7 +2,7 @@ package com.tstu.util;
 
 import com.tstu.App;
 import com.tstu.controllers.MainWindow;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,14 +11,14 @@ import java.util.Date;
 
 public class CustomLogger implements com.tstu.util.Logger {
     private final MainWindow window;
-    private final org.apache.log4j.Logger logger;
+    private final org.apache.logging.log4j.Logger logger;
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final String loggerName;
 
     public CustomLogger(String loggerName) {
         this.loggerName = loggerName.substring(loggerName.lastIndexOf(".") + 1);
         this.window = App.getMainWindow();
-        this.logger = Logger.getLogger(loggerName);
+        this.logger = LogManager.getLogger(loggerName);
     }
 
     @Override
