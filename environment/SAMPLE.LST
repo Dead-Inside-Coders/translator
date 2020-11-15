@@ -1,0 +1,136 @@
+Turbo Assembler	 Version 3.1	    11/15/20 19:19:39	    Page 1
+sample.asm
+
+
+
+      1	0000			     data segment para public "data"
+      2	0000  0000		     a dw 0b
+      3	0002  0000		     b dw 0b
+      4	0004  0000		     c dw 0b
+      5	0006  0000		     d dw 0b
+      6	0008  20*(0A)		     PRINT_BUF DB ' ' DUP(10)
+      7	0028  24		     BUFEND DB '$'
+      8	0029			     data ends
+      9	0000			     stk segment stack
+     10	0000  0100*(3F)		     db	256 dup	("?")
+     11	0100			     stk ends
+     12	0000			     code segment para public "code"
+     13	0000			     main proc
+     14				     assume cs:code,ds:data,ss:stk
+     15	0000  B8 0000s		     mov ax,data
+     16	0003  8E D8		     mov ds,ax
+     17	0005  C7 06 0000r 0000	     mov a,0b
+     18	000B  C7 06 0002r 0001	     mov b,1b
+     19	0011  C7 06 0006r 0001	     mov d,1b
+     20	0017  B8 0000		     mov ax,0b
+     21	001A  50		     push ax
+     22	001B  B8 0001		     mov ax,1b
+     23	001E  50		     push ax
+     24	001F  5B		     pop bx
+     25	0020  58		     pop ax
+     26	0021  23 C3		     and ax,bx
+     27	0023  50		     push ax
+     28	0024  A3 0004r		     mov c, ax
+     29	0027  A1 0004r		     mov ax,c
+     30	002A  8B 1E 0000r	     mov bx,a
+     31	002E  3B C3		     cmp ax,bx
+     32	0030  74 02		     je	if
+     33	0032  75 13		     jne else
+     34	0034			     if:
+*Warning* sample.asm(34) Reserved word used as symbol: IF
+     35	0034  B8 0000		     mov ax,0b
+     36	0037  50		     push ax
+     37	0038  B8 0001		     mov ax,1b
+     38	003B  50		     push ax
+     39	003C  5B		     pop bx
+     40	003D  58		     pop ax
+     41	003E  0B C3		     or	ax,bx
+     42	0040  50		     push ax
+     43	0041  A3 0004r		     mov c, ax
+     44	0044  EB 14 90		     jmp cont
+     45	0047			     else:
+*Warning* sample.asm(45) Reserved word used as symbol: ELSE
+     46	0047  B8 0000		     mov ax,0b
+     47	004A  50		     push ax
+     48	004B  B8 0001		     mov ax,1b
+     49	004E  50		     push ax
+     50	004F  5B		     pop bx
+     51	0050  58		     pop ax
+     52	0051  23 C3		     and ax,bx
+     53	0053  50		     push ax
+     54	0054  A3 0004r		     mov c, ax
+     55	0057  EB 01 90		     jmp cont
+Turbo Assembler	 Version 3.1	    11/15/20 19:19:39	    Page 2
+sample.asm
+
+
+
+     56	005A			     cont:
+     57	005A  50		     push ax
+     58	005B  A1 0004r		     mov ax, c
+     59	005E  E8 0006		     CALL PRINT
+     60	0061  58		     pop ax
+     61	0062  B8 4C00		     mov ax,4c00h
+     62	0065  CD 21		     int 21h
+     63	0067			     main endp
+     64	0067			     PRINT PROC	NEAR
+     65	0067  B9 000A		     MOV CX, 10
+     66	006A  BF 0020		     MOV DI, BUFEND - PRINT_BUF
+     67	006D			     PRINT_LOOP:
+     68	006D  BA 0000		     MOV DX, 0
+     69	0070  F7 F1		     DIV CX
+     70	0072  80 C2 30		     ADD DL, '0'
+     71	0075  88 95 0007r	     MOV [PRINT_BUF + DI - 1], DL
+     72	0079  4F		     DEC DI
+     73	007A  3C 00		     CMP AL, 0
+     74	007C  75 EF		     JNE PRINT_LOOP
+     75	007E  BA 0008r		     LEA DX, PRINT_BUF
+     76	0081  03 D7		     ADD DX, DI
+     77	0083  B4 09		     MOV AH, 09H
+     78	0085  CD 21		     INT 21H
+     79	0087  C3		     RET
+     80	0088			     PRINT ENDP
+     81	0088			     code ends
+     82				     end main
+Turbo Assembler	 Version 3.1	    11/15/20 19:19:39	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "11/15/20"
+??FILENAME			  Text	 "sample  "
+??TIME				  Text	 "19:19:39"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SAMPLE
+@WORDSIZE			  Text	 2
+A				  Word	 DATA:0000
+B				  Word	 DATA:0002
+BUFEND				  Byte	 DATA:0028
+C				  Word	 DATA:0004
+CONT				  Near	 CODE:005A
+D				  Word	 DATA:0006
+ELSE				  Near	 CODE:0047
+IF				  Near	 CODE:0034
+MAIN				  Near	 CODE:0000
+PRINT				  Near	 CODE:0067
+PRINT_BUF			  Byte	 DATA:0008
+PRINT_LOOP			  Near	 CODE:006D
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0088 Para	  Public  CODE
+DATA				  16  0029 Para	  Public  DATA
+STK				  16  0100 Para	  Stack
+Turbo Assembler	 Version 3.1	    11/15/20 19:19:39	    Page 4
+Error Summary
+
+
+
+*Warning* sample.asm(34) Reserved word used as symbol: IF
+*Warning* sample.asm(45) Reserved word used as symbol: ELSE
+

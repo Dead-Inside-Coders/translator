@@ -1,0 +1,1 @@
+start DOSBox-0.74-3/DOSBox.exe -noconsole -conf "DOSBox-0.74-3/asmProg.conf"
