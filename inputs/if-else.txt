@@ -1,0 +1,13 @@
+Var a,b,c,d :Logical
+Begin
+a:=0
+b:=1
+d:=b
+c:= a & d
+If c = a Then
+c:= a | d
+Else
+c:= a & d
+Endif
+Print c
+End

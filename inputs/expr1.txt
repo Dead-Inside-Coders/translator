@@ -1,0 +1,7 @@
+Var a,b,c,d :Logical
+Begin
+a:=0
+b:=1
+c:= a & a | b & b ^ !b
+Print c
+End
