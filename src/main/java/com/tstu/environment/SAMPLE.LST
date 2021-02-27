@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 3.1	    11/15/20 00:47:52	    Page 1
+Turbo Assembler	 Version 3.1	    02/27/21 14:53:43	    Page 1
 sample.asm
 
 
@@ -19,80 +19,48 @@ sample.asm
      14				     assume cs:code,ds:data,ss:stk
      15	0000  B8 0000s		     mov ax,data
      16	0003  8E D8		     mov ds,ax
-     17	0005  C7 06 0000r 0000	     mov a,0b
-     18	000B  C7 06 0002r 0001	     mov b,1b
-     19	0011  C7 06 0006r 0001	     mov d,1b
-     20	0017  B8 0000		     mov ax,0b
-     21	001A  50		     push ax
-     22	001B  B8 0001		     mov ax,1b
-     23	001E  50		     push ax
-     24	001F  5B		     pop bx
-     25	0020  58		     pop ax
-     26	0021  23 C3		     and ax,bx
-     27	0023  50		     push ax
-     28	0024  A3 0004r		     mov c, ax
-     29	0027  A1 0004r		     mov ax,c
-     30	002A  8B 1E 0000r	     mov bx,a
-     31	002E  3B C3		     cmp ax,bx
-     32	0030  74 02		     je	if
-     33	0032  75 13		     jne else
-     34	0034			     if:
-*Warning* sample.asm(34) Reserved word used as symbol: IF
-     35	0034  B8 0000		     mov ax,0b
-     36	0037  50		     push ax
-     37	0038  B8 0001		     mov ax,1b
-     38	003B  50		     push ax
-     39	003C  5B		     pop bx
-     40	003D  58		     pop ax
-     41	003E  0B C3		     or	ax,bx
-     42	0040  50		     push ax
-     43	0041  A3 0004r		     mov c, ax
-     44	0044  EB 14 90		     jmp cont
-     45	0047			     else:
-*Warning* sample.asm(45) Reserved word used as symbol: ELSE
-     46	0047  B8 0000		     mov ax,0b
-     47	004A  50		     push ax
-     48	004B  B8 0001		     mov ax,1b
-     49	004E  50		     push ax
-     50	004F  5B		     pop bx
-     51	0050  58		     pop ax
-     52	0051  23 C3		     and ax,bx
-     53	0053  50		     push ax
-     54	0054  A3 0004r		     mov c, ax
-     55	0057  EB 01 90		     jmp cont
-Turbo Assembler	 Version 3.1	    11/15/20 00:47:52	    Page 2
-sample.asm
-
-
-
-     56	005A			     cont:
-     57	005A  50		     push ax
-     58	005B  A1 0004r		     mov ax, c
-     59	005E  E8 0006		     CALL PRINT
-     60	0061  58		     pop ax
-     61	0062  B8 4C00		     mov ax,4c00h
-     62	0065  CD 21		     int 21h
-     63	0067			     main endp
-     64	0067			     PRINT PROC	NEAR
-     65	0067  B9 000A		     MOV CX, 10
-     66	006A  BF 0020		     MOV DI, BUFEND - PRINT_BUF
-     67	006D			     PRINT_LOOP:
-     68	006D  BA 0000		     MOV DX, 0
-     69	0070  F7 F1		     DIV CX
-     70	0072  80 C2 30		     ADD DL, '0'
-     71	0075  88 95 0007r	     MOV [PRINT_BUF + DI - 1], DL
-     72	0079  4F		     DEC DI
-     73	007A  3C 00		     CMP AL, 0
-     74	007C  75 EF		     JNE PRINT_LOOP
-     75	007E  BA 0008r		     LEA DX, PRINT_BUF
-     76	0081  03 D7		     ADD DX, DI
-     77	0083  B4 09		     MOV AH, 09H
-     78	0085  CD 21		     INT 21H
-     79	0087  C3		     RET
-     80	0088			     PRINT ENDP
-     81	0088			     code ends
-     82				     end main
-Turbo Assembler	 Version 3.1	    11/15/20 00:47:52	    Page 3
+     17	0005  C7 06 0000r 0001	     mov a,1b
+     18	000B  A1 0000r		     mov ax,a
+     19	000E  BB 0000		     mov bx,0b
+     20	0011  3B C3		     cmp ax,bx
+     21	0013  74 07		     je	label0
+     22	0015  BB 0001		     mov bx,1b
+     23	0018  3B C3		     cmp ax,bx
+     24	001A  74 09		     je	label1
+     25	001C			     label0:
+     26	001C  C7 06 0004r 0000	     mov c,0b
+     27	0022  EB 0A 90		     jmp cont
+     28	0025			     label1:
+     29	0025  C7 06 0004r 0001	     mov c,1b
+     30	002B  EB 01 90		     jmp cont
+     31	002E			     cont:
+     32	002E  50		     push ax
+     33	002F  A1 0004r		     mov ax, c
+     34	0032  E8 0006		     CALL PRINT
+     35	0035  58		     pop ax
+     36	0036  B8 4C00		     mov ax,4c00h
+     37	0039  CD 21		     int 21h
+     38	003B			     main endp
+     39	003B			     PRINT PROC	NEAR
+     40	003B  B9 000A		     MOV CX, 10
+     41	003E  BF 0020		     MOV DI, BUFEND - PRINT_BUF
+     42	0041			     PRINT_LOOP:
+     43	0041  BA 0000		     MOV DX, 0
+     44	0044  F7 F1		     DIV CX
+     45	0046  80 C2 30		     ADD DL, '0'
+     46	0049  88 95 0007r	     MOV [PRINT_BUF + DI - 1], DL
+     47	004D  4F		     DEC DI
+     48	004E  3C 00		     CMP AL, 0
+     49	0050  75 EF		     JNE PRINT_LOOP
+     50	0052  BA 0008r		     LEA DX, PRINT_BUF
+     51	0055  03 D7		     ADD DX, DI
+     52	0057  B4 09		     MOV AH, 09H
+     53	0059  CD 21		     INT 21H
+     54	005B  C3		     RET
+     55	005C			     PRINT ENDP
+     56	005C			     code ends
+     57				     end main
+Turbo Assembler	 Version 3.1	    02/27/21 14:53:43	    Page 2
 Symbol Table
 
 
@@ -100,9 +68,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "11/15/20"
+??DATE				  Text	 "02/27/21"
 ??FILENAME			  Text	 "sample  "
-??TIME				  Text	 "00:47:52"
+??TIME				  Text	 "14:53:43"
 ??VERSION			  Number 030A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
@@ -112,18 +80,18 @@ A				  Word	 DATA:0000
 B				  Word	 DATA:0002
 BUFEND				  Byte	 DATA:0028
 C				  Word	 DATA:0004
-CONT				  Near	 CODE:005A
+CONT				  Near	 CODE:002E
 D				  Word	 DATA:0006
-ELSE				  Near	 CODE:0047
-IF				  Near	 CODE:0034
+LABEL0				  Near	 CODE:001C
+LABEL1				  Near	 CODE:0025
 MAIN				  Near	 CODE:0000
-PRINT				  Near	 CODE:0067
+PRINT				  Near	 CODE:003B
 PRINT_BUF			  Byte	 DATA:0008
-PRINT_LOOP			  Near	 CODE:006D
+PRINT_LOOP			  Near	 CODE:0041
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-CODE				  16  0088 Para	  Public  CODE
+CODE				  16  005C Para	  Public  CODE
 DATA				  16  0029 Para	  Public  DATA
 STK				  16  0100 Para	  Stack
 Turbo Assembler	 Version 3.1	    11/15/20 00:47:52	    Page 4

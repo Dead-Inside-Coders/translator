@@ -10,8 +10,7 @@ import com.tstu.backend.model.Keyword;
 import com.tstu.backend.model.enums.Command;
 import com.tstu.backend.model.enums.Lexems;
 import com.tstu.backend.model.enums.tCat;
-import com.tstu.backend.structures.ConditionParser;
-import com.tstu.backend.structures.ExpressionParser;
+import com.tstu.backend.structures.*;
 import com.tstu.util.CustomLogger;
 import com.tstu.util.Logger;
 
@@ -107,7 +106,7 @@ public class SyntaxAnalyzer implements ISyntaxAnalyzer {
         return codeLines.subList(startIndex, endIndex + 1);
     }
 
-    private void parseProcedureCode() throws SyntaxAnalyzeException, ExpressionAnalyzeException, ConditionAnalyzeException, LexicalAnalyzeException, WhileAnalyzeException {
+    private void parseProcedureCode() throws SyntaxAnalyzeException, ExpressionAnalyzeException, ConditionAnalyzeException, LexicalAnalyzeException, WhileAnalyzeException, CaseAnalyzeException {
 
         List<List<Keyword>> mainArea = singleOutPartOfCode(Command.BEGIN, Command.END);
 
@@ -124,6 +123,13 @@ public class SyntaxAnalyzer implements ISyntaxAnalyzer {
                         IConditionParser conditionParser = new ConditionParser(conditionArea, declaratedVariable,  nameTable);
                         conditionParser.parseCondition();
                         i += conditionArea.size() - 1;
+                    }
+                    if (currentIdentifier.getName().equals(Command.CASE.getName()))
+                    {
+                        List<List<Keyword>> caseArea = singleOutPartOfCode(Command.CASE, Command.ENDCASE);
+                        CaseParser caseParser = new CaseParser(caseArea, declaratedVariable, nameTable);
+                        caseParser.parseCaseArea();
+                        i += caseArea.size() - 1;
                     }
                     break;
                 case VAR:
@@ -186,7 +192,7 @@ public class SyntaxAnalyzer implements ISyntaxAnalyzer {
 
     }
 
-    public boolean checkSyntax() throws SyntaxAnalyzeException, ExpressionAnalyzeException, ConditionAnalyzeException, LexicalAnalyzeException, WhileAnalyzeException {
+    public boolean checkSyntax() throws SyntaxAnalyzeException, ExpressionAnalyzeException, ConditionAnalyzeException, LexicalAnalyzeException, WhileAnalyzeException, CaseAnalyzeException {
         logger.info("\n---Синтаксический анализ---\n");
         splitIntoCodeLines();
         parseVariableDeclaration();

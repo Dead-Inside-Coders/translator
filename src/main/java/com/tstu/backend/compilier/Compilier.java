@@ -46,7 +46,7 @@ public class Compilier {
 
         try {
             syntaxAnalyzer.checkSyntax();
-        } catch (ExpressionAnalyzeException | SyntaxAnalyzeException | ConditionAnalyzeException | LexicalAnalyzeException | WhileAnalyzeException e) {
+        } catch (ExpressionAnalyzeException | SyntaxAnalyzeException | ConditionAnalyzeException | LexicalAnalyzeException | WhileAnalyzeException | CaseAnalyzeException e) {
             logger.error(e.getMessage());
             return false;
         }
