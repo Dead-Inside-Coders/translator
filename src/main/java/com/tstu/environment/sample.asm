@@ -14,9 +14,23 @@ main proc
 assume cs:code,ds:data,ss:stk
 mov ax,data
 mov ds,ax
-mov a,0b
+mov a,1b
+mov ax,a
+mov bx,0b
+cmp ax,bx
+je label0
+mov bx,1b
+cmp ax,bx
+je label1
+label0:
+mov c,0b
+jmp cont
+label1:
+mov c,1b
+jmp cont
+cont: 
 push ax
-mov ax, a
+mov ax, c
 CALL PRINT
 pop ax
 mov ax,4c00h

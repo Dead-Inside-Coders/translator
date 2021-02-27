@@ -3,7 +3,7 @@
 
  00000H 00028H 00029H DATA               DATA
  00030H 0012FH 00100H STK                
- 00130H 00168H 00039H CODE               CODE
+ 00130H 0018BH 0005CH CODE               CODE
 
   Address         Publics by Name
 

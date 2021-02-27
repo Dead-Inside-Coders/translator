@@ -1,0 +1,9 @@
+Var a,b,c,d :Logical
+Begin
+a:=1
+Case a Of
+0: c:=0
+1: c:=1
+EndCase
+Print c
+End
